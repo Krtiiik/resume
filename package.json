@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "build": "resumed --theme jsonresume-theme-kendall"
+  },
+  "dependencies": {
+    "jsonresume-theme-kendall": "^0.2.0",
+    "resumed": "^3.0.1"
+  }
+}
