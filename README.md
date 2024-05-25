@@ -8,3 +8,5 @@ Built using the [JSON Resume](https://www.jsonresume.org/) project. The followin
 npm install
 npm run build
 ```
+
+The resume is build in the `docs` directory. This is a hack so that it can be deployed easily on Github Pages.
