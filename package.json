@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "resumed --theme jsonresume-theme-kendall"
+    "build": "resumed --theme jsonresume-theme-kendall -o index.html"
   },
   "dependencies": {
     "jsonresume-theme-kendall": "^0.2.0",
