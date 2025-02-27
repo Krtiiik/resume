@@ -4,6 +4,6 @@
   },
   "dependencies": {
     "jsonresume-theme-kendall": "^0.2.0",
-    "resumed": "^3.0.1"
+    "resumed": "^4.1.0"
   }
 }
