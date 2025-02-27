@@ -2,60 +2,89 @@
     "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
     "basics": {
         "name": "Lukáš Nedbálek",
-        "label": "Developer",
+        "label": "Student; Developer; Optimization and Operations Research practitioner",
         "image": "./photo.jpg",
-        "email": "",
-        "phone": "",
-        "url": "",
-        "summary": "",
+        "summary": "I study AI - Optimization, Operations Research, and Machine Learning. My main interest is solving difficult real-life problems using the best and most efficient approaches possible. I believe that effective problem-solving involves not only knowing how to solve problems but also properly identifying them and understanding their context, leading to better long-term solutions.",
         "location": {
-            "address": "",
-            "postalCode": "",
-            "city": "",
-            "countryCode": "",
-            "region": ""
+            "city": "Prague",
+            "countryCode": "CZ"
         },
         "profiles": [
             {
-                "network": "Twitter",
-                "username": "",
-                "url": ""
+                "network": "Github",
+                "username": "Krtiiik",
+                "url": "https://github.com/Krtiiik"
             },
             {
-                "network": "SoundCloud",
-                "username": "",
-                "url": ""
+                "network": "LinkedIn",
+                "username": "Lukáš Nedbálek",
+                "url": "https://www.linkedin.com/in/luk%C3%A1%C5%A1-nedb%C3%A1lek-22a561310/"
             }
         ]
     },
     "work": [
         {
-            "name": "",
-            "location": "",
-            "description": "",
-            "position": "",
-            "url": "",
-            "startDate": "",
-            "endDate": "",
-            "summary": "",
+            "name": "Merica, Inc.",
+            "location": "Prague",
+            "description": "Production Optimization software company",
+            "position": "Intern",
+            "startDate": "2020-09",
+            "summary": "Developing production scheduling and optimization software, testing and debugging, working with large data."
+        },
+        {
+            "name": "McDonald's",
+            "location": "Prague",
+            "description": "Fast food restaurant",
+            "position": "Shift Manager",
+            "startDate": "2020",
+            "endDate": "2020-09",
+            "summary": "Managing\n- teams of over 12 crew members to cooperate efficiently in a fast-paced environment\n- inventory of operational sources and sufficient supply\nEnsuring highest and consistent product quality",
             "highlights": [
-                "",
-                "",
+                ""
+            ]
+        },
+        {
+            "position": "Crew Trainer",
+            "startDate": "2018",
+            "endDate": "2020",
+            "summary": "Training\n- new employees in various positions\n- experienced employees in newly introduced procedures",
+            "highlights": [
+                ""
+            ]
+        },
+        {
+            "position": "Crew",
+            "startDate": "2017-07",
+            "endDate": "2018",
+            "summary": "Working in\n- fast-paced work environments\n- diverse teams\n- various roles: food preparation, customer service, resource supply",
+            "highlights": [
                 ""
             ]
         }
     ],
     "education": [
         {
-            "institution": "",
-            "url": "",
-            "area": "",
-            "studyType": "",
-            "startDate": "",
-            "endDate": "",
-            "score": "",
-            "courses": [
-            ]
+            "institution": "Faculty of Mathematics and Physics, Charles University, Prague",
+            "url": "https://www.mff.cuni.cz/",
+            "area": "Artificial Intelligence",
+            "studyType": "Master's Degree",
+            "startDate": "2024"
+        },
+        {
+            "institution": "Faculty of Mathematics and Physics, Charles University, Prague",
+            "url": "https://www.mff.cuni.cz/",
+            "area": "Computer Science",
+            "studyType": "Bachelor's Degree",
+            "startDate": "2021",
+            "endDate": "2024"
+        },
+        {
+            "institution": "Gymnázium Christiana Dopplera",
+            "url": "https://gchd.cz/",
+            "area": "Mathematics, Physics, Informatics",
+            "studyType": "High School",
+            "startDate": "2013",
+            "endDate": "2021"
         }
     ],
     "publications": [
