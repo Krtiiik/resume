@@ -89,61 +89,33 @@
     ],
     "publications": [
         {
-            "name": "",
-            "publisher": "",
-            "releaseDate": "",
-            "url": "",
+            "name": "Bottleneck Identification in Resource-Constrained Project Scheduling via Constraint Relaxation",
+            "publisher": "SCITEPRESS",
+            "releaseDate": "2025-02-25",
+            "url": "https://doi.org/10.5220/0013253700003893",
             "summary": ""
         }
     ],
-    "skills": [
+    "volunteer": [
         {
-            "name": "",
-            "level": "",
-            "keywords": [
-            ]
-        },
-        {
-            "name": "",
-            "level": "",
-            "keywords": [
-            ]
+            "organization": "Faculty of Mathematics and Physics, Charles University, Prague",
+            "position": "Coordinator of computer science student tutors",
+            "startDate": "2024",
+            "summary": "Leading a team of student tutors in computer science, organizing tutoring sessions, and helping students with their study problems."
         }
     ],
     "languages": [
         {
+            "language": "Czech",
+            "fluency": "Native speaker"
+        },
+        {
             "language": "English",
-            "fluency": ""
-        }
-    ],
-    "interests": [
+            "fluency": "Professional"
+        },
         {
-            "name": "",
-            "keywords": [
-            ]
-        }
-    ],
-    "references": [
-        {
-            "name": "",
-            "reference": ""
-        }
-    ],
-    "projects": [
-        {
-            "name": "",
-            "description": "",
-            "highlights": [
-            ],
-            "keywords": [
-            ],
-            "startDate": "",
-            "endDate": "",
-            "url": "",
-            "roles": [
-            ],
-            "entity": "",
-            "type": ""
+            "language": "German",
+            "fluency": "Basics"
         }
     ],
     "meta": {
