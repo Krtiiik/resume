@@ -8,7 +8,10 @@ RESUME_DATA_PATH = Path("resume.json")
 TEMPLATES_DIR = Path("templates")
 TEMPLATE_FMT = "template.{format}"
 RESUMES_DIR = Path("resumes")
-RESUME_FMT = "resume.{format}"
+RESUMES_OUTPUTS = {
+    "html": "index.html",  # so that GitHub Pages deploy works
+    "pdf": "resume.pdf",
+}
 
 
 with open(RESUME_DATA_PATH, "r", encoding="utf-8") as f:
@@ -25,6 +28,6 @@ for format in ["html", "tex"]:
         continue
 
     output = template.render(**data)
-    resume_path = RESUMES_DIR / RESUME_FMT.format(format=format)
+    resume_path = RESUMES_DIR / RESUMES_OUTPUTS[format]
     with open(resume_path, "w", encoding="utf-8") as f:
         f.write(output)
