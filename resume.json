@@ -2,9 +2,11 @@
     "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
     "basics": {
         "name": "Lukáš Nedbálek",
-        "label": "Student; Developer; Optimization and Operations Research practitioner",
+        "label": "Student, Problem Solver, Developer, Tinkerer",
         "image": "./photo.jpg",
         "summary": "I study AI - Optimization, Operations Research, and Machine Learning. My main interest is solving difficult real-life problems using the best and most efficient approaches possible. I believe that effective problem-solving involves not only knowing how to solve problems but also properly identifying them and understanding their context, leading to better long-term solutions.",
+        "url": "https://krtiiik.github.io/",
+        "email": "lukas.nedbalek@email.cz",
         "location": {
             "city": "Prague",
             "countryCode": "CZ"
@@ -26,10 +28,10 @@
         {
             "name": "Merica, Inc.",
             "location": "Prague",
-            "description": "Production Optimization software company",
-            "position": "Intern",
+            "description": "Production optimization software company",
+            "position": "Internship",
             "startDate": "2020-09",
-            "summary": "Developing production scheduling and optimization software, testing and debugging, working with large data."
+            "summary": "Developing production scheduling and optimization software, testing and debugging, processing large data."
         },
         {
             "name": "McDonald's",
@@ -38,28 +40,22 @@
             "position": "Shift Manager",
             "startDate": "2020",
             "endDate": "2020-09",
-            "summary": "Managing\n- teams of over 12 crew members to cooperate efficiently in a fast-paced environment\n- inventory of operational sources and sufficient supply\nEnsuring highest and consistent product quality",
+            "summary": "Managing teams of over 12 crew members to cooperate efficiently in a fast-paced environment, managing inventory of operational sources and sufficient supply, ensuring highest and consistent product quality.",
             "highlights": [
-                ""
+                "Shift Manager Course @ McDonald's Czech Republic (2020/6)"
             ]
         },
         {
             "position": "Crew Trainer",
             "startDate": "2018",
             "endDate": "2020",
-            "summary": "Training\n- new employees in various positions\n- experienced employees in newly introduced procedures",
-            "highlights": [
-                ""
-            ]
+            "summary": "Training new employees in various positions, and experienced employees in newly introduced procedures."
         },
         {
             "position": "Crew",
             "startDate": "2017-07",
             "endDate": "2018",
-            "summary": "Working in\n- fast-paced work environments\n- diverse teams\n- various roles: food preparation, customer service, resource supply",
-            "highlights": [
-                ""
-            ]
+            "summary": "Working in fast-paced work environments, diverse teams, various roles: food preparation, customer service, resource supply."
         }
     ],
     "education": [
@@ -71,11 +67,8 @@
             "startDate": "2024"
         },
         {
-            "institution": "Faculty of Mathematics and Physics, Charles University, Prague",
-            "url": "https://www.mff.cuni.cz/",
             "area": "Computer Science",
             "studyType": "Bachelor's Degree",
-            "startDate": "2021",
             "endDate": "2024"
         },
         {
@@ -83,7 +76,6 @@
             "url": "https://gchd.cz/",
             "area": "Mathematics, Physics, Informatics",
             "studyType": "High School",
-            "startDate": "2013",
             "endDate": "2021"
         }
     ],
@@ -101,7 +93,12 @@
             "organization": "Faculty of Mathematics and Physics, Charles University, Prague",
             "position": "Coordinator of computer science student tutors",
             "startDate": "2024",
-            "summary": "Leading a team of student tutors in computer science, organizing tutoring sessions, and helping students with their study problems."
+            "summary": "Leading a team of 10+ computer science student tutors."
+        },
+        {
+            "position": "Computer science student tutor",
+            "startDate": "2023",
+            "summary": "Organizing tutoring sessions and helping students with their studies-related problems."
         }
     ],
     "languages": [
@@ -119,8 +116,6 @@
         }
     ],
     "meta": {
-        "canonical": "https://raw.githubusercontent.com/jsonresume/resume-schema/master/resume.json",
-        "version": "v1.0.0",
-        "lastModified": "2024-05-26T08:10:00"
+        "lastModified": "2026-08-06T20:00:00.000Z"
     }
 }
