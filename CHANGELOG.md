@@ -18,4 +18,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Fixed
 
 - Mismatched `<h4>`/`</h3>` tags in work entries, and an empty paragraph under publications.
+- GitHub Pages deploy failing because `astral-sh/setup-uv@v10` does not exist; pinned to `v10.3.3` (setup-uv publishes no floating major tag past `v7`).
 - Dropped the unused Font Awesome stylesheet and the dangling `photo.jpg` reference.

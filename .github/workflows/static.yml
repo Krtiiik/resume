@@ -32,7 +32,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Setup uv
-        uses: astral-sh/setup-uv@v10
+        uses: astral-sh/setup-uv@v10.3.3
       - name: Build resume
         run: uv run --frozen build.py
       - name: Setup Pages
