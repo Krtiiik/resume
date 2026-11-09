@@ -65,7 +65,7 @@ body {
         width: auto;
         min-height: 100vh;
         margin: 0;
-        /* Bottom room so the fixed theme toggle floats over padding, not text */
+        /* Bottom room so the fixed floats (theme toggle, PDF link) float over padding, not text */
         padding: 28px 20px 84px;
         border: 0;
         border-radius: 0;
@@ -94,10 +94,16 @@ a {
     text-underline-offset: 2px;
 }
 
-#theme-toggle {
+#floats {
     position: fixed;
     top: 18px;
     right: 22px;
+    display: flex;
+    gap: 10px;
+}
+
+#theme-toggle,
+#pdf-link {
     width: 44px;
     height: 44px;
     display: flex;
@@ -111,21 +117,26 @@ a {
     cursor: pointer;
 }
 
-#theme-toggle:hover {
+#theme-toggle:hover,
+#pdf-link:hover {
     color: var(--accent-text);
 }
 
-#theme-toggle:focus-visible {
+#theme-toggle:focus-visible,
+#pdf-link:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
 }
 
-#theme-toggle svg {
+#theme-toggle svg,
+#pdf-link svg {
     width: 18px;
     height: 18px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 #theme-toggle path {
@@ -133,7 +144,7 @@ a {
 }
 
 @media (max-width: 210mm) {
-    #theme-toggle {
+    #floats {
         top: auto;
         bottom: 18px;
         right: 18px;
@@ -431,7 +442,7 @@ main>section>ul:has(.skills-row) {
         box-shadow: none;
     }
 
-    #theme-toggle {
+    #floats {
         display: none;
     }
 

@@ -39,9 +39,16 @@
 
 
 <body>
-    <button id="theme-toggle" type="button" aria-label="Toggle dark mode">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z"/></svg>
-    </button>
+    <div id="floats">
+        <button id="theme-toggle" type="button" aria-label="Toggle dark mode">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z"/></svg>
+        </button>
+        {% if pdf_url %}
+        <a id="pdf-link" href="{{ pdf_url }}" target="_blank" rel="noopener" aria-label="Open as PDF">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+        </a>
+        {% endif %}
+    </div>
     <script>
         document.getElementById("theme-toggle").onclick = function () {
             var root = document.documentElement;
