@@ -173,6 +173,13 @@
                                 {% endif %}
                             </div>
                         </header>
+                        {% if edu.courses %}
+                        <ul class="entry-highlights">
+                            {% for course in edu.courses %}
+                            <li>{{ course }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
                     </div>
                 </li>
                 {% endfor %}
