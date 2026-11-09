@@ -323,9 +323,18 @@ main>section>ul {
         font-style: italic;
     }
 
-    span[data-entry-dates="start"]+span[data-entry-dates="end"]::before,
-    span[data-entry-dates="start"]+span[data-entry-dates="present"]::before {
-        content: "\2014\00a0";
+    /* All end labels of the section share one cell; the widest sets the width */
+    .end {
+        display: inline-grid;
+        justify-items: start;
+
+        >span {
+            grid-area: 1 / 1;
+        }
+    }
+
+    .ghost {
+        visibility: hidden;
     }
 }
 

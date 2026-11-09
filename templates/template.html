@@ -19,6 +19,30 @@
 {%- endif %}
 {%- endmacro %}
 
+{# Start and end of an item's date range. `items` is the whole section: every end
+   label in it is laid over the real one, invisibly, so all end dates in the section
+   take the width of the widest one and the dashes before them line up. #}
+{% macro dates(item, items) -%}
+{%- set ns = namespace(ends=[]) -%}
+{%- for other in items -%}
+{%- set label = other.endDate | replace('-', '/') if other.endDate else "Present" -%}
+{%- if label not in ns.ends %}{% set ns.ends = ns.ends + [label] %}{% endif -%}
+{%- endfor -%}
+{%- set end = item.endDate | replace('-', '/') if item.endDate else "Present" -%}
+<div class="entry-dates">
+    {% if item.startDate -%}
+    <span data-entry-dates="start">{{ item.startDate | replace('-', '/') }}</span>
+    <span class="dash">&mdash;</span>
+    {%- endif %}
+    <span class="end">
+        <span data-entry-dates="{{ 'end' if item.endDate else 'present' }}">{{ end }}</span>
+        {%- for label in ns.ends if label != end %}
+        <span class="ghost" data-entry-dates="{{ 'present' if label == 'Present' else 'end' }}" aria-hidden="true">{{ label }}</span>
+        {%- endfor %}
+    </span>
+</div>
+{%- endmacro %}
+
 {% macro ext(url, name) -%}
 <a class="ext" href="{{ url }}" aria-label="Open {{ name }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
 {%- endmacro %}
@@ -104,16 +128,7 @@
                     <div class="entry-content">
                         <header>
                             <h4>{{ job.position }}</h4>
-                            <div class="entry-dates">
-                                {% if job.startDate %}
-                                <span data-entry-dates="start">{{ job.startDate | replace('-', '/') }}</span>
-                                {% endif %}
-                                {% if job.endDate %}
-                                <span data-entry-dates="end">{{ job.endDate | replace('-', '/') }}</span>
-                                {% else %}
-                                <span data-entry-dates="present">Present</span>
-                                {% endif %}
-                            </div>
+                            {{ dates(job, work) }}
                         </header>
                         {% if job.summary %}
                         <p>{{ job.summary }}</p>
@@ -173,16 +188,7 @@
                                 <h4 class="title">{{ edu.studyType }}</h4>
                                 <span class="subtitle">{{ edu.area }}</span>
                             </div>
-                            <div class="entry-dates">
-                                {% if edu.startDate %}
-                                <span data-entry-dates="start">{{ edu.startDate | replace('-', '/') }}</span>
-                                {% endif %}
-                                {% if edu.endDate %}
-                                <span data-entry-dates="end">{{ edu.endDate | replace('-', '/') }}</span>
-                                {% else %}
-                                <span data-entry-dates="present">Present</span>
-                                {% endif %}
-                            </div>
+                            {{ dates(edu, education) }}
                         </header>
                         {% if edu.courses %}
                         <ul class="entry-highlights">
@@ -212,16 +218,7 @@
                     <div class="entry-content">
                         <header>
                             <h4>{{ volu.position }}</h4>
-                            <div class="entry-dates">
-                                {% if volu.startDate %}
-                                <span data-entry-dates="start">{{ volu.startDate | replace('-', '/') }}</span>
-                                {% endif %}
-                                {% if volu.endDate %}
-                                <span data-entry-dates="end">{{ volu.endDate | replace('-', '/') }}</span>
-                                {% else %}
-                                <span data-entry-dates="present">Present</span>
-                                {% endif %}
-                            </div>
+                            {{ dates(volu, volunteer) }}
                         </header>
                         {% if volu.summary %}
                         <p>{{ volu.summary }}</p>
