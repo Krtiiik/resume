@@ -387,3 +387,50 @@ main>section>ul:has(.skills-row) {
         font-weight: 600;
     }
 }
+
+/* Print **********************************************************************/
+
+@page {
+    size: A4;
+    margin: 14mm 16mm;
+}
+
+@media print {
+
+    /* Always the light palette, on plain paper */
+    :root,
+    :root[data-theme] {
+        color-scheme: light;
+    }
+
+    html {
+        background: none;
+    }
+
+    body {
+        width: auto;
+        min-height: 0;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    #theme-toggle {
+        display: none;
+    }
+
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .entry {
+        break-inside: avoid;
+    }
+
+    main>section>h2 {
+        break-after: avoid;
+    }
+}
