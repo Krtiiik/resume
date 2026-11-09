@@ -166,6 +166,13 @@
                         {% if pub.summary %}
                         <p>{{ pub.summary }}</p>
                         {% endif %}
+                        {% if pub.highlights %}
+                        <ul class="entry-highlights">
+                            {% for highlight in pub.highlights %}
+                            <li>{{ highlight }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
                     </div>
                 </li>
                 {% endfor %}
