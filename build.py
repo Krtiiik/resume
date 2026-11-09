@@ -11,19 +11,20 @@ TEMPLATE_NAME = "template.html"
 OUTPUT_PATH = ROOT / "resumes" / "index.html"  # index.html so that GitHub Pages serves it
 
 
-def group_skills(data: dict) -> list[tuple[str, list[str]]]:
-    """Group skill names by level, in the order given by meta.skillLevels.
+def group_skills(data: dict) -> list[tuple[str, list[dict]]]:
+    """Group skills by level, in the order given by meta.skillLevels.
 
+    Each skill is a dict with its name and keywords (possibly empty).
     A skill whose level is missing or not in that list is omitted with a warning.
     """
-    groups: dict[str, list[str]] = {level: [] for level in data.get("meta", {}).get("skillLevels", [])}
+    groups: dict[str, list[dict]] = {level: [] for level in data.get("meta", {}).get("skillLevels", [])}
     for skill in data.get("skills", []):
         name, level = skill.get("name"), skill.get("level")
         if name and level in groups:
-            groups[level].append(name)
+            groups[level].append({"name": name, "keywords": skill.get("keywords", [])})
         else:
             print(f"warning: skill {name!r} has a missing name or a missing/unknown level {level!r}; omitted", file=sys.stderr)
-    return [(level, names) for level, names in groups.items() if names]
+    return [(level, skills) for level, skills in groups.items() if skills]
 
 
 def build() -> None:

@@ -361,6 +361,11 @@ main>section>ul:has(.skills-row) {
         line-height: 1.5;
     }
 
+    small {
+        font-size: inherit;
+        color: var(--muted);
+    }
+
     span+span::before {
         content: '';
         width: 3px;

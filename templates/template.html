@@ -219,10 +219,10 @@
         <section>
             <h2>Skills</h2>
             <ul>
-                {% for level, names in skill_groups %}
+                {% for level, skills in skill_groups %}
                 <li class="skills-row">
                     <h4>{{ level }}</h4>
-                    <p>{% for name in names %}<span>{{ name }}</span>{% endfor %}</p>
+                    <p>{% for skill in skills %}<span>{{ skill.name }}{% if skill.keywords %} <small>({{ skill.keywords | join(", ") }})</small>{% endif %}</span>{% endfor %}</p>
                 </li>
                 {% endfor %}
             </ul>
