@@ -65,7 +65,8 @@ body {
         width: auto;
         min-height: 100vh;
         margin: 0;
-        padding: 28px 20px;
+        /* Bottom room so the fixed theme toggle floats over padding, not text */
+        padding: 28px 20px 84px;
         border: 0;
         border-radius: 0;
     }
@@ -129,6 +130,14 @@ a {
 
 #theme-toggle path {
     fill: currentColor;
+}
+
+@media (max-width: 210mm) {
+    #theme-toggle {
+        top: auto;
+        bottom: 18px;
+        right: 18px;
+    }
 }
 
 /* Header *********************************************************************/
