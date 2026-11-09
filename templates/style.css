@@ -210,6 +210,7 @@ a.ci:hover {
 #main-header>p {
     margin-top: 14px;
     align-self: stretch;
+    text-align: justify;
     color: var(--ink-soft);
     line-height: 1.5;
 }
