@@ -299,7 +299,7 @@ wheels = [
 
 [[package]]
 name = "resume"
-version = "0.1.0"
+version = "1"
 source = { virtual = "." }
 dependencies = [
     { name = "brotli" },
