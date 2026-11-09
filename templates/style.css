@@ -18,6 +18,7 @@
     --gap: 19px;
     --inset: 15px;
     --air: 10px;
+    --page-margin-x: 16mm;
 }
 
 :root[data-theme="light"] {
@@ -57,7 +58,8 @@ body {
     width: 210mm;
     min-height: 297mm;
     margin: 72px auto;
-    padding: 50px 58px 46px;
+    /* Sides match the printed page (@page margin, minus the 1px border) so the text wraps the same on screen and in the PDF */
+    padding: 50px calc(var(--page-margin-x) - 1px) 46px;
 }
 
 @media (max-width: 210mm) {
@@ -446,7 +448,7 @@ main>section>ul:has(.skills-row) {
 
 @page {
     size: A4;
-    margin: 14mm 16mm;
+    margin: 14mm 16mm; /* sides: keep equal to --page-margin-x */
 }
 
 @media print {
