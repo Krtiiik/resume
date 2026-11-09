@@ -1,19 +1,31 @@
 /* Core ***********************************************************************/
+/* Follows the OS theme; the toggle overrides it via data-theme on <html>. */
 :root {
-    --desk: #ebe8e3;
-    --dot: rgba(70, 52, 24, .22);
-    --sheet: #ffffff;
-    --ink: #1a1a1a;
-    --ink-soft: #3d3a36;
-    --muted: #665f58;
-    --hairline: rgba(0, 0, 0, .10);
-    --accent: #ff9900;
-    --accent-text: #a35700;
-    --shadow: 0 1px 2px rgba(40, 28, 8, .07), 0 18px 40px -12px rgba(40, 28, 8, .22);
+    color-scheme: light dark;
+
+    --desk: light-dark(#ebe8e3, #0f0e0d);
+    --dot: light-dark(rgba(70, 52, 24, .22), rgba(255, 235, 205, .20));
+    --sheet: light-dark(#ffffff, #1c1b1a);
+    --ink: light-dark(#1a1a1a, #ece8e1);
+    --ink-soft: light-dark(#3d3a36, #cfc9bf);
+    --muted: light-dark(#665f58, #9d968c);
+    --hairline: light-dark(rgba(0, 0, 0, .10), rgba(255, 235, 205, .14));
+    --accent: light-dark(#ff9900, #ffa31a);
+    --accent-text: light-dark(#a35700, #ffa31a);
+    --shadow: 0 1px 2px light-dark(rgba(40, 28, 8, .07), rgba(0, 0, 0, .4)),
+        0 18px 40px -12px light-dark(rgba(40, 28, 8, .22), rgba(0, 0, 0, .7));
 
     --gap: 19px;
     --inset: 15px;
     --air: 10px;
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
 }
 
 html {
@@ -79,6 +91,44 @@ a {
     color: inherit;
     text-decoration-color: var(--accent);
     text-underline-offset: 2px;
+}
+
+#theme-toggle {
+    position: fixed;
+    top: 18px;
+    right: 22px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: var(--ink);
+    background: var(--sheet);
+    border: 1px solid var(--hairline);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#theme-toggle:hover {
+    color: var(--accent-text);
+}
+
+#theme-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+#theme-toggle svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+}
+
+#theme-toggle path {
+    fill: currentColor;
 }
 
 /* Header *********************************************************************/
