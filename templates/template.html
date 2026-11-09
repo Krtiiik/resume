@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 
+{% macro icon(name) -%}
+{% if name == "globe" -%}
+<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+{%- elif name == "mail" -%}
+<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+{%- elif name == "pin" -%}
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+{%- elif name == "github" -%}
+<svg class="brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+{%- elif name == "linkedin" -%}
+<svg class="brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+{%- else -%}
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>
+{%- endif %}
+{%- endmacro %}
+
+{% macro ext(url, name) -%}
+<a class="ext" href="{{ url }}" aria-label="Open {{ name }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+{%- endmacro %}
+
 <head>
     <meta charset="utf-8">
     <title>{{ basics.name }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400..700;1,400..700&display=swap">
     <style>
 {% include "style.css" %}
     </style>
@@ -16,35 +39,22 @@
         <h1>{{ basics.name }}</h1>
         <span id="label">{{ basics.label }}</span>
         <div id="contacts-row">
-            <section>
-                {% if basics.url %}
-                <div class="contacts-item" data-contact="url"><a href="{{ basics.url }}">{{ basics.url|replace("https://", "")|trim("/") }}</a></div>
-                {% endif %}
-                {% if basics.email %}
-                <div class="contacts-item" data-contact="email">{{ basics.email|replace("@", "(at)")}}</div>
-                {% endif %}
-                {% if basics.location %}{% set loc = basics.location %}
-                <div class="contacts-item" data-contact="location">
-                    {% if loc.city %}
-                    <span>{{ loc.city }}</span>
-                    {% endif %}
-                    {% if loc.countryCode %}
-                    <span>{{ loc.countryCode }}</span>
-                    {% endif %}
-                </div>
-                {% endif %}
-            </section>
-            <section>
-                {% for profile in basics.profiles %}
-                <div class="profiles-item" data-contact="{{ profile.network }}">
-                    {% if profile.url %}
-                    <a href="{{ profile.url }}">{{ profile.username }}</a>
-                    {% else %}
-                    <span>{{ profile.username }}</span>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </section>
+            {% if basics.url %}
+            <a class="ci" href="{{ basics.url }}">{{ icon("globe") }}<span>{{ basics.url|replace("https://", "")|trim("/") }}</span></a>
+            {% endif %}
+            {% if basics.email %}
+            <span class="ci">{{ icon("mail") }}<span>{{ basics.email|replace("@", "(at)") }}</span></span>
+            {% endif %}
+            {% if basics.location %}
+            <span class="ci">{{ icon("pin") }}<span>{{ [basics.location.city, basics.location.countryCode]|select|join(", ") }}</span></span>
+            {% endif %}
+            {% for profile in basics.profiles %}
+            {% if profile.url %}
+            <a class="ci" href="{{ profile.url }}">{{ icon(profile.network|lower) }}<span>{{ profile.username }}</span></a>
+            {% else %}
+            <span class="ci">{{ icon(profile.network|lower) }}<span>{{ profile.username }}</span></span>
+            {% endif %}
+            {% endfor %}
         </div>
         <p>{{ basics.summary }}</p>
     </header>
@@ -58,9 +68,9 @@
                 <li class="entry">
                     {% if job.name %}
                     <header class="entry-header row-flex-air">
-                        <h3>{{ job.name }}</h3>
+                        <h3>{{ job.name }}{% if job.url %}{{ ext(job.url, job.name ~ " website") }}{% endif %}</h3>
                         {% if job.description %}
-                        <span>{{ job.description }}</span>
+                        <span class="subtitle">{{ job.description }}</span>
                         {% endif %}
                     </header>
                     {% endif %}
@@ -101,14 +111,14 @@
             <ul>
                 {% for pub in publications %}
                 <li class="entry">
-                    <header class="entry-header row-flex-air">
-                        <h3><a href="{{ pub.url }}">{{ pub.name }}</a></h3>
-                        <span class="subtitle">{{ pub.publisher }}</span>
+                    <header class="entry-header split">
+                        <h3>{{ pub.name }}{% if pub.url %}{{ ext(pub.url, "publication") }}{% endif %}</h3>
                         <div class="entry-dates">
                             <span data-entry-dates="single">{{ pub.releaseDate | replace('-', '/') }}</span>
                         </div>
                     </header>
                     <div class="entry-content">
+                        <span class="subtitle">{{ pub.publisher }}</span>
                         {% if pub.summary %}
                         <p>{{ pub.summary }}</p>
                         {% endif %}
@@ -126,14 +136,8 @@
                 {% for edu in education %}
                 <li class="entry">
                     {% if edu.institution %}
-                    <header class="entry-header row-flex-air">
-                        <h3>
-                            {% if edu.url %}
-                            <a href="{{ edu.url }}">{{ edu.institution }}</a>
-                            {% else %}
-                            {{ edu.institution }}
-                            {% endif %}
-                        </h3>
+                    <header class="entry-header">
+                        <h3>{{ edu.institution }}{% if edu.url %}{{ ext(edu.url, edu.institution ~ " website") }}{% endif %}</h3>
                     </header>
                     {% endif %}
                     <div class="entry-content">
@@ -167,14 +171,8 @@
                 {% for volu in volunteer %}
                 <li class="entry">
                     {% if volu.organization %}
-                    <header class="entry-header row-flex-air">
-                        <h3>
-                            {% if volu.url %}
-                            <a href="{{ volu.url }}">{{ volu.organization }}</a>
-                            {% else %}
-                            {{ volu.organization }}
-                            {% endif %}
-                        </h3>
+                    <header class="entry-header">
+                        <h3>{{ volu.organization }}{% if volu.url %}{{ ext(volu.url, volu.organization ~ " website") }}{% endif %}</h3>
                     </header>
                     {% endif %}
                     <div class="entry-content">
@@ -202,7 +200,7 @@
         {% endif %}
 
         {% if languages %}
-        <section>
+        <section class="languages">
             <h2>Languages</h2>
             <ul>
                 {% for lang in languages %}
