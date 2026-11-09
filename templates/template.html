@@ -20,26 +20,30 @@
 {%- endmacro %}
 
 {# Start and end of an item's date range. `items` is the whole section: every end
-   label in it is laid over the real one, invisibly, so all end dates in the section
-   take the width of the widest one and the dashes before them line up. #}
+   label of a range in it is laid over the real one, invisibly, so all range ends in
+   the section take the width of the widest one and the dashes before them line up.
+   A lone end date (no start) is not a range and stays plainly right-aligned. #}
 {% macro dates(item, items) -%}
-{%- set ns = namespace(ends=[]) -%}
-{%- for other in items -%}
-{%- set label = other.endDate | replace('-', '/') if other.endDate else "Present" -%}
-{%- if label not in ns.ends %}{% set ns.ends = ns.ends + [label] %}{% endif -%}
-{%- endfor -%}
 {%- set end = item.endDate | replace('-', '/') if item.endDate else "Present" -%}
+{%- set end_kind = 'end' if item.endDate else 'present' -%}
 <div class="entry-dates">
     {% if item.startDate -%}
+    {%- set ns = namespace(ends=[]) -%}
+    {%- for other in items if other.startDate -%}
+    {%- set label = other.endDate | replace('-', '/') if other.endDate else "Present" -%}
+    {%- if label not in ns.ends %}{% set ns.ends = ns.ends + [label] %}{% endif -%}
+    {%- endfor -%}
     <span data-entry-dates="start">{{ item.startDate | replace('-', '/') }}</span>
     <span class="dash">&mdash;</span>
-    {%- endif %}
     <span class="end">
-        <span data-entry-dates="{{ 'end' if item.endDate else 'present' }}">{{ end }}</span>
+        <span data-entry-dates="{{ end_kind }}">{{ end }}</span>
         {%- for label in ns.ends if label != end %}
         <span class="ghost" data-entry-dates="{{ 'present' if label == 'Present' else 'end' }}" aria-hidden="true">{{ label }}</span>
         {%- endfor %}
     </span>
+    {%- else -%}
+    <span data-entry-dates="{{ end_kind }}">{{ end }}</span>
+    {%- endif %}
 </div>
 {%- endmacro %}
 
