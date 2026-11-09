@@ -394,8 +394,8 @@ main>section>ul:has(.skills-row) {
 
 .skills-row {
     display: grid;
-    grid-template-columns: 118px 1fr;
-    column-gap: 12px;
+    grid-template-columns: 76px 1fr;
+    column-gap: 10px;
     align-items: baseline;
 
     h4 {
