@@ -2,10 +2,12 @@
     "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
     "basics": {
         "name": "Lukáš Nedbálek",
-        "label": "Student, Problem Solver, Developer, Tinkerer",
-        "summary": "I study AI - Optimization, Operations Research, and Machine Learning. My main interest is solving difficult real-life problems using the best and most efficient approaches possible. I believe that effective problem-solving involves not only knowing how to solve problems but also properly identifying them and understanding their context, leading to better long-term solutions.",
+        "label": "Problem Solver, Developer, Tinkerer",
+        "image": "photo.jpeg",
+        "summary": "I study AI - Optimization, Operations Research, and Machine Learning. My main interest is solving difficult real-life problems using the best and most efficient approaches possible. I believe that effective problem-solving involves not only knowing how to solve problems but also properly identifying them and understanding their context, leading to better long-term solutions. Just as important, clear communication and well-presented results turn great individual work into successful team efforts.",
         "url": "https://krtiiik.github.io/",
         "email": "lukas.nedbalek@email.cz",
+        "phone": "fIEfw1lXPl7JrH7jovUYpisgazfaGO0aiS8ZwZV3Fpt1yu3kj8SxrbYAJspAbwqg",
         "location": {
             "city": "Prague",
             "countryCode": "CZ"
@@ -28,7 +30,7 @@
             "name": "Merica, Inc.",
             "location": "Prague",
             "description": "Production optimization software company",
-            "position": "Internship",
+            "position": "Working Student",
             "startDate": "2020-09",
             "summary": "Developing production scheduling and optimization software, testing and debugging, processing large data."
         },
@@ -37,23 +39,23 @@
             "location": "Prague",
             "description": "Fast food restaurant",
             "position": "Shift Manager",
-            "startDate": "2020",
+            "startDate": "2020-01",
             "endDate": "2020-09",
-            "summary": "Managing teams of over 12 crew members to cooperate efficiently in a fast-paced environment, managing inventory of operational sources and sufficient supply, ensuring highest and consistent product quality.",
+            "summary": "Managing teams of over 12 crew members to cooperate efficiently in a fast-paced environment, managing inventory and sufficient supply, ensuring high and consistent product quality.",
             "highlights": [
                 "Shift Manager Course @ McDonald's Czech Republic (2020/06)"
             ]
         },
         {
             "position": "Crew Trainer",
-            "startDate": "2018",
-            "endDate": "2020",
+            "startDate": "2018-01",
+            "endDate": "2020-01",
             "summary": "Training new employees in various positions, and experienced employees in newly introduced procedures."
         },
         {
             "position": "Crew",
             "startDate": "2017-07",
-            "endDate": "2018",
+            "endDate": "2018-01",
             "summary": "Working in fast-paced work environments, diverse teams, various roles: food preparation, customer service, resource supply."
         }
     ],
@@ -63,9 +65,21 @@
             "url": "https://www.mff.cuni.cz/",
             "area": "Artificial Intelligence",
             "studyType": "Master's Degree",
-            "startDate": "2024"
+            "courses": [
+                "Deep Reinforcement Learning - #1 in class by earned points",
+                "Deep Learning - #15 in class by earned points"
+            ]
         },
         {
+            "institution": "Technical University of Munich",
+            "url": "https://www.tum.de/en/",
+            "area": "Exchange, Fall Semester",
+            "studyType": "Erasmus",
+            "endDate": "2025"
+        },
+        {
+            "institution": "Faculty of Mathematics and Physics, Charles University, Prague",
+            "url": "https://www.mff.cuni.cz/",
             "area": "Computer Science",
             "studyType": "Bachelor's Degree",
             "endDate": "2024"
@@ -101,6 +115,106 @@
             "position": "Computer science student tutor",
             "startDate": "2023",
             "summary": "Organizing tutoring sessions and helping students with their studies-related problems."
+        },
+        {
+            "organization": "CTU Open, ICPC",
+            "position": "Room Master",
+            "summary": "Helping with the organization of the programming contest.",
+            "startDate": "2022"
+        },
+        {
+            "organization": "Matematická Soutěž (MaSo)",
+            "position": "Helper",
+            "summary": "Helping with the organization of the mathematical contest.",
+            "startDate": "2019"
+        }
+    ],
+    "skills": [
+        {
+            "name": "Python",
+            "level": "Professional"
+        },
+        {
+            "name": "C#",
+            "level": "Professional"
+        },
+        {
+            "name": "Python Libraries",
+            "level": "Advanced",
+            "keywords": [
+                "PyTorch",
+                "NumPy",
+                "OR-Tools",
+                "Matplotlib",
+                "scikit-learn",
+                "Pandas",
+                "Streamlit",
+                "networkx"
+            ]
+        },
+        {
+            "name": "Constraint Programming",
+            "level": "Advanced"
+        },
+        {
+            "name": "Scheduling / Operations Research",
+            "level": "Advanced"
+        },
+        {
+            "name": "Agentic AI Coding",
+            "level": "Advanced"
+        },
+        {
+            "name": "Git",
+            "level": "Advanced"
+        },
+        {
+            "name": "LaTeX",
+            "level": "Advanced"
+        },
+        {
+            "name": "SQL",
+            "level": "Advanced"
+        },
+        {
+            "name": "Linear Programming / MIP",
+            "level": "Familiar"
+        },
+        {
+            "name": "Metaheuristics",
+            "level": "Familiar"
+        },
+        {
+            "name": "Python Libraries",
+            "level": "Familiar",
+            "keywords": [
+                "NiceGUI",
+                "PySide6"
+            ]
+        },
+        {
+            "name": "CI/CD",
+            "level": "Familiar"
+        },
+        {
+            "name": "Shell Scripting",
+            "level": "Familiar",
+            "keywords": [
+                "POSIX",
+                "PowerShell"
+            ]
+        },
+        {
+            "name": "HTML/CSS",
+            "level": "Familiar"
+        },
+        {
+            "name": "JavaScript",
+            "level": "Familiar"
+        },
+        {
+            "name": "Typst",
+            "level": "Familiar"
         }
     ],
     "languages": [
@@ -118,7 +232,11 @@
         }
     ],
     "meta": {
-        "skillLevels": ["Professional", "Advanced", "Familiar"],
-        "lastModified": "2026-08-06T20:00:00.000Z"
+        "skillLevels": [
+            "Professional",
+            "Advanced",
+            "Familiar"
+        ],
+        "lastModified": "2026-11-09T20:00:00.000Z"
     }
 }
