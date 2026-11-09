@@ -172,12 +172,16 @@ a {
     color: var(--muted);
 }
 
-#contacts-row {
+.contacts-row {
     margin-top: 14px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 6px 20px;
+}
+
+.contacts-row+.contacts-row {
+    margin-top: 6px;
 }
 
 .ci {

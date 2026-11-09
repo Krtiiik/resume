@@ -89,10 +89,8 @@
     <header id="main-header">
         <h1>{{ basics.name }}</h1>
         <span id="label">{{ basics.label }}</span>
-        <div id="contacts-row">
-            {% if basics.url %}
-            <a class="ci" href="{{ basics.url }}">{{ icon("globe") }}<span>{{ basics.url|replace("https://", "")|trim("/") }}</span></a>
-            {% endif %}
+        <div class="contacts-row">
+            {# The webpage (basics.url) is left out of the render for now. #}
             {% if basics.email %}
             <span class="ci">{{ icon("mail") }}<span>{{ basics.email|replace("@", "(at)") }}</span></span>
             {% endif %}
@@ -103,6 +101,9 @@
             {% if basics.location %}
             <span class="ci">{{ icon("pin") }}<span>{{ [basics.location.city, basics.location.countryCode]|select|join(", ") }}</span></span>
             {% endif %}
+        </div>
+        {% if basics.profiles %}
+        <div class="contacts-row">
             {% for profile in basics.profiles %}
             {% if profile.url %}
             <a class="ci" href="{{ profile.url }}">{{ icon(profile.network|lower) }}<span>{{ profile.username }}</span></a>
@@ -111,6 +112,7 @@
             {% endif %}
             {% endfor %}
         </div>
+        {% endif %}
         <p>{{ basics.summary }}</p>
     </header>
 
