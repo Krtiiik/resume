@@ -81,6 +81,22 @@ def font_face_css() -> str:
     return "\n".join(rules)
 
 
+def photo_data_uri(data: dict) -> str | None:
+    """basics.image (a path relative to the project root) as a base64 data URI, so the page stays self-contained.
+
+    Returns None, with a warning if an image was named, when there is no usable image.
+    """
+    name = data.get("basics", {}).get("image")
+    if not name:
+        return None
+    path = ROOT / name
+    mime = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp"}.get(path.suffix.lower())
+    if mime is None or not path.is_file():
+        print(f"warning: basics.image {name!r} is not a readable jpg, png or webp file; photo omitted", file=sys.stderr)
+        return None
+    return f"data:{mime};base64,{base64.b64encode(path.read_bytes()).decode('ascii')}"
+
+
 def _derive_keys(passphrase: str, salt: bytes) -> tuple[bytes, bytes]:
     """Stretch the passphrase into an encryption key and a separate authentication key."""
     material = hashlib.scrypt(passphrase.encode("utf-8"), salt=salt, n=2**14, r=8, p=1, dklen=64)
@@ -236,11 +252,14 @@ def build() -> None:
     skill_groups = group_skills(data)
     font_css = font_face_css()
     phone_svg = render_phone(data)
+    photo_uri = photo_data_uri(data)
     pdf_name = pdf_filename(data)
     pdf_path = OUTPUT_PATH.with_name(pdf_name)
 
     def render(pdf_url: str | None) -> str:
-        return template.render(**data, skill_groups=skill_groups, font_css=font_css, phone_svg=phone_svg, pdf_url=pdf_url)
+        return template.render(
+            **data, skill_groups=skill_groups, font_css=font_css, phone_svg=phone_svg, photo_uri=photo_uri, pdf_url=pdf_url
+        )
 
     OUTPUT_PATH.parent.mkdir(exist_ok=True)
     # First render links to the PDF (hidden in print, so the PDF is the same either way);

@@ -207,12 +207,30 @@ a.ci:hover {
     color: var(--accent-text);
 }
 
-#main-header>p {
+#summary {
     margin-top: 14px;
     align-self: stretch;
     text-align: justify;
     color: var(--ink-soft);
     line-height: 1.5;
+}
+
+/* Floats right of the summary, which wraps around it */
+#photo {
+    float: right;
+    width: 30mm;
+    aspect-ratio: 1;
+    object-fit: cover;
+    margin: 3px 0 6px 16px;
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+}
+
+@media (max-width: 210mm) {
+    #photo {
+        width: 22mm;
+        margin-left: 12px;
+    }
 }
 
 /* Main Content ***************************************************************/

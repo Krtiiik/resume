@@ -109,7 +109,12 @@
             {% endif %}
             {% endfor %}
         </div>
-        <p>{{ basics.summary }}</p>
+        <div id="summary">
+            {% if photo_uri %}
+            <img id="photo" src="{{ photo_uri }}" alt="">
+            {% endif %}
+            <p>{{ basics.summary }}</p>
+        </div>
     </header>
 
     <main>
