@@ -156,13 +156,17 @@
                 {% for pub in publications %}
                 <li class="entry">
                     <header class="entry-header split">
-                        <h3>{{ pub.name }}{% if pub.url %}{{ ext(pub.url, "publication") }}{% endif %}</h3>
+                        <div class="row-flex-air">
+                            <h3>{{ pub.name }}{% if pub.url %}{{ ext(pub.url, "publication") }}{% endif %}</h3>
+                            {% if pub.publisher %}
+                            <span class="subtitle">{{ pub.publisher }}</span>
+                            {% endif %}
+                        </div>
                         <div class="entry-dates">
                             <span data-entry-dates="single">{{ pub.releaseDate | replace('-', '/') }}</span>
                         </div>
                     </header>
                     <div class="entry-content">
-                        <span class="subtitle">{{ pub.publisher }}</span>
                         {% if pub.summary %}
                         <p>{{ pub.summary }}</p>
                         {% endif %}
