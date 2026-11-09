@@ -1,33 +1,28 @@
 import json
-import os
 from pathlib import Path
+
 import jinja2
 
-
-RESUME_DATA_PATH = Path("resume.json")
-TEMPLATES_DIR = Path("templates")
-TEMPLATE_FMT = "template.{format}"
-RESUMES_DIR = Path("resumes")
-RESUMES_OUTPUTS = {
-    "html": "index.html",  # so that GitHub Pages deploy works
-    "pdf": "resume.pdf",
-}
+ROOT = Path(__file__).parent
+RESUME_DATA_PATH = ROOT / "resume.json"
+TEMPLATES_DIR = ROOT / "templates"
+TEMPLATE_NAME = "template.html"
+OUTPUT_PATH = ROOT / "resumes" / "index.html"  # index.html so that GitHub Pages serves it
 
 
-with open(RESUME_DATA_PATH, "r", encoding="utf-8") as f:
-    data = json.load(f)
+def build() -> None:
+    data = json.loads(RESUME_DATA_PATH.read_text(encoding="utf-8"))
 
-env = jinja2.Environment(loader=jinja2.FileSystemLoader(TEMPLATES_DIR))
+    env = jinja2.Environment(
+        loader=jinja2.FileSystemLoader(TEMPLATES_DIR),
+        autoescape=jinja2.select_autoescape(["html"]),
+    )
+    output = env.get_template(TEMPLATE_NAME).render(**data)
 
-os.makedirs(RESUMES_DIR, exist_ok=True)
-for format in ["html", "tex"]:
-    try:
-        template = env.get_template(TEMPLATE_FMT.format(format=format))
-    except jinja2.TemplateNotFound:
-        print(f"! Template for [{format}] format does not exist in \"{str(TEMPLATES_DIR)}\"")
-        continue
+    OUTPUT_PATH.parent.mkdir(exist_ok=True)
+    OUTPUT_PATH.write_text(output, encoding="utf-8")
+    print(f"Built {OUTPUT_PATH.relative_to(ROOT)}")
 
-    output = template.render(**data)
-    resume_path = RESUMES_DIR / RESUMES_OUTPUTS[format]
-    with open(resume_path, "w", encoding="utf-8") as f:
-        f.write(output)
+
+if __name__ == "__main__":
+    build()

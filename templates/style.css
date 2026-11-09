@@ -1,9 +1,8 @@
 /* Core ***********************************************************************/
 :root {
-    --background: #686868;
+    --page-bg: #686868;
     --bg: #ffffff;
     --fg: #000000;
-    --secondary-fg: #444444;
     --accent: #ff9900;
 
     --main-padding: 50px;
@@ -13,7 +12,7 @@
 }
 
 html {
-    background-color: var(--background);
+    background-color: var(--page-bg);
 }
 
 body {
@@ -23,6 +22,15 @@ body {
 
     color: var(--fg);
     background-color: var(--bg);
+
+    display: flex;
+    flex-direction: column;
+
+    padding: var(--main-padding);
+    gap: var(--main-gap);
+
+    margin: 1.5rem auto;
+    width: 210mm;
 }
 
 p,
@@ -43,19 +51,6 @@ ul {
 
 a {
     color: inherit;
-}
-
-/* Body ***********************************************************************/
-
-body {
-    display: flex;
-    flex-direction: column;
-
-    padding: var(--main-padding);
-    gap: var(--main-gap);
-
-    margin: 1.5rem auto;
-    width: 210mm;
 }
 
 /* Header *********************************************************************/
@@ -142,6 +137,10 @@ section .entry {
         align-items: baseline;
         justify-content: space-between;
     }
+}
+
+.entry-highlights {
+    margin-top: calc(var(--content-airiness) / 2);
 }
 
 .entry-dates {
