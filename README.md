@@ -1,6 +1,6 @@
 # Resume
 
-This is my resume.
+This is my resume, published at <https://krtiiik.github.io/resume/>.
 
 The data lives in `resume.json` ([JSON Resume](https://www.jsonresume.org/) format), the layout and styling in `templates/` (`template.html`, with `style.css` inlined into it). The build renders them into a single self-contained `resumes/index.html`:
 
