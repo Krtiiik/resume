@@ -1,7 +1,11 @@
 import base64
+import getpass
+import hashlib
+import hmac
 import json
 import os
 import re
+import secrets
 import shutil
 import subprocess
 import sys
@@ -10,6 +14,9 @@ import unicodedata
 from pathlib import Path
 
 import jinja2
+from fontTools.pens.svgPathPen import SVGPathPen
+from fontTools.pens.transformPen import TransformPen
+from fontTools.ttLib import TTFont
 
 ROOT = Path(__file__).parent
 RESUME_DATA_PATH = ROOT / "resume.json"
@@ -27,6 +34,11 @@ FONT_SUBSETS = {
     "latin-ext": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,"
     "U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
 }
+
+# basics.phone in resume.json is stored encrypted (see encrypt_phone) so that scrapers reading the public repo
+# or the page cannot pick it up. The passphrase comes from this environment variable, e.g. a GitHub Actions secret.
+PHONE_KEY_ENV = "RESUME_PHONE_KEY"
+PHONE_FONT = FONTS_DIR / "source-serif-4-latin-wght-normal.woff2"
 
 # Browsers that can print the page to PDF, looked up on PATH in this order.
 BROWSER_COMMANDS = ["google-chrome", "google-chrome-stable", "chromium", "chromium-browser", "chrome", "msedge"]
@@ -67,6 +79,98 @@ def font_face_css() -> str:
                 f"unicode-range: {unicode_range}; }}"
             )
     return "\n".join(rules)
+
+
+def _derive_keys(passphrase: str, salt: bytes) -> tuple[bytes, bytes]:
+    """Stretch the passphrase into an encryption key and a separate authentication key."""
+    material = hashlib.scrypt(passphrase.encode("utf-8"), salt=salt, n=2**14, r=8, p=1, dklen=64)
+    return material[:32], material[32:]
+
+
+def _xor_keystream(key: bytes, data: bytes) -> bytes:
+    """XOR data with an HMAC-SHA256 counter-mode keystream (the same call encrypts and decrypts)."""
+    stream = b"".join(hmac.new(key, counter.to_bytes(4, "big"), "sha256").digest() for counter in range(len(data) // 32 + 1))
+    return bytes(a ^ b for a, b in zip(data, stream))
+
+
+def encrypt_phone(phone: str, passphrase: str) -> str:
+    """Encrypt a phone number into a URL-safe string for basics.phone in resume.json.
+
+    The string is base64 of salt | ciphertext | tag, with a fresh random salt each time, so it reveals nothing
+    about the number except its length, and a wrong passphrase or a tampered string is detected on decryption.
+    """
+    salt = secrets.token_bytes(16)
+    enc_key, mac_key = _derive_keys(passphrase, salt)
+    cipher = _xor_keystream(enc_key, phone.encode("utf-8"))
+    tag = hmac.new(mac_key, salt + cipher, "sha256").digest()[:16]
+    return base64.urlsafe_b64encode(salt + cipher + tag).decode("ascii")
+
+
+def decrypt_phone(token: str, passphrase: str) -> str:
+    """Inverse of encrypt_phone. Raises ValueError for a malformed string or a wrong passphrase."""
+    raw = base64.urlsafe_b64decode(token)
+    if len(raw) < 33:
+        raise ValueError("the encrypted phone number is malformed")
+    salt, cipher, tag = raw[:16], raw[16:-16], raw[-16:]
+    enc_key, mac_key = _derive_keys(passphrase, salt)
+    if not hmac.compare_digest(tag, hmac.new(mac_key, salt + cipher, "sha256").digest()[:16]):
+        raise ValueError("wrong passphrase or corrupted phone number")
+    return _xor_keystream(enc_key, cipher).decode("utf-8")
+
+
+def phone_to_svg(phone: str) -> str:
+    """Draw the phone number as an SVG of glyph outlines from the page font, so no text for scrapers (or PDF
+    text extraction) to find. It is filled with currentColor and sized in em, so it follows the surrounding text."""
+    font = TTFont(PHONE_FONT)
+    glyph_set, cmap, advances = font.getGlyphSet(), font.getBestCmap(), font["hmtx"]
+    units = font["head"].unitsPerEm
+    ascent, descent = font["hhea"].ascent, -font["hhea"].descent
+
+    outlines, x = [], 0
+    for char in phone:
+        name = cmap.get(ord(char))
+        if name is None:
+            raise ValueError(f"the font has no glyph for {char!r} in the phone number")
+        pen = SVGPathPen(glyph_set)
+        glyph_set[name].draw(TransformPen(pen, (1, 0, 0, -1, x, 0)))  # y points down in SVG; baseline at y = 0
+        outlines.append(pen.getCommands())
+        x += advances[name][0]
+
+    return (
+        f'<svg class="brand phone" viewBox="0 {-ascent} {x} {ascent + descent}" role="img" aria-label="Phone number" '
+        f'style="width: {x / units:.3f}em; height: {(ascent + descent) / units:.3f}em"><path d="{" ".join(outlines)}"/></svg>'
+    )
+
+
+def render_phone(data: dict) -> str | None:
+    """The decrypted basics.phone as SVG, or None (with a warning if there was a number) when it can't be shown."""
+    token = data.get("basics", {}).get("phone")
+    if not token:
+        return None
+    passphrase = os.environ.get(PHONE_KEY_ENV)
+    if not passphrase:
+        print(f"warning: basics.phone is set but {PHONE_KEY_ENV} is not; phone number omitted", file=sys.stderr)
+        return None
+    try:
+        return phone_to_svg(decrypt_phone(token, passphrase))
+    except ValueError as error:
+        print(f"warning: {error}; phone number omitted", file=sys.stderr)
+        return None
+
+
+def encrypt_phone_command() -> None:
+    """Interactive helper: ask for the phone number and print the string to put in basics.phone."""
+    passphrase = os.environ.get(PHONE_KEY_ENV)
+    if not passphrase:
+        passphrase = getpass.getpass(f"{PHONE_KEY_ENV} is not set; passphrase to encrypt with: ")
+        if getpass.getpass("Repeat passphrase: ") != passphrase:
+            sys.exit("error: the passphrases differ")
+    phone = input("Phone number, as it should appear on the resume: ").strip()
+    if not phone or not passphrase:
+        sys.exit("error: need both a phone number and a passphrase")
+    phone_to_svg(phone)  # fails early if the font can't draw some character
+    print('\nPut this in resume.json, as "phone" inside "basics":\n')
+    print(encrypt_phone(phone, passphrase))
 
 
 def pdf_filename(data: dict) -> str:
@@ -131,20 +235,29 @@ def build() -> None:
     template = env.get_template(TEMPLATE_NAME)
     skill_groups = group_skills(data)
     font_css = font_face_css()
+    phone_svg = render_phone(data)
     pdf_name = pdf_filename(data)
     pdf_path = OUTPUT_PATH.with_name(pdf_name)
+
+    def render(pdf_url: str | None) -> str:
+        return template.render(**data, skill_groups=skill_groups, font_css=font_css, phone_svg=phone_svg, pdf_url=pdf_url)
 
     OUTPUT_PATH.parent.mkdir(exist_ok=True)
     # First render links to the PDF (hidden in print, so the PDF is the same either way);
     # if the PDF could not be made, render again without the link.
-    OUTPUT_PATH.write_text(template.render(**data, skill_groups=skill_groups, font_css=font_css, pdf_url=pdf_name), encoding="utf-8")
+    OUTPUT_PATH.write_text(render(pdf_name), encoding="utf-8")
     print(f"Built {OUTPUT_PATH.relative_to(ROOT)}")
 
     if build_pdf(OUTPUT_PATH, pdf_path):
         print(f"Built {pdf_path.relative_to(ROOT)}")
     else:
-        OUTPUT_PATH.write_text(template.render(**data, skill_groups=skill_groups, font_css=font_css, pdf_url=None), encoding="utf-8")
+        OUTPUT_PATH.write_text(render(None), encoding="utf-8")
 
 
 if __name__ == "__main__":
-    build()
+    if len(sys.argv) == 1:
+        build()
+    elif sys.argv[1:] == ["encrypt-phone"]:
+        encrypt_phone_command()
+    else:
+        sys.exit("usage: build.py [encrypt-phone]")

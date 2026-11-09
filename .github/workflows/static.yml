@@ -35,6 +35,9 @@ jobs:
         uses: astral-sh/setup-uv@v10.3.3
       - name: Build resume
         run: uv run --frozen build.py
+        env:
+          # Decrypts basics.phone from resume.json; without it the phone number is left out of the page
+          RESUME_PHONE_KEY: ${{ secrets.RESUME_PHONE_KEY }}
       - name: Setup Pages
         uses: actions/configure-pages@v6
       - name: Upload artifact
