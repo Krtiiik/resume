@@ -26,10 +26,8 @@
     <title>{{ basics.name }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cstyle%3Epath,rect,circle{stroke:black}@media(prefers-color-scheme:dark){path,rect,circle{stroke:white}}%3C/style%3E%3Cg fill='none' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='4' width='20' height='16' rx='2.5'/%3E%3Ccircle cx='8' cy='10.5' r='2'/%3E%3Cpath d='M4.5 16.5c.5-2 2-3 3.5-3s3 1 3.5 3'/%3E%3Cpath d='M14 9h5M14 12.5h5M14 16h3'/%3E%3C/g%3E%3C/svg%3E">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400..700;1,400..700&display=swap">
     <style>
+{{ font_css|safe }}
 {% include "style.css" %}
     </style>
     <script>

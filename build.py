@@ -1,3 +1,4 @@
+import base64
 import json
 import os
 import re
@@ -14,7 +15,18 @@ ROOT = Path(__file__).parent
 RESUME_DATA_PATH = ROOT / "resume.json"
 TEMPLATES_DIR = ROOT / "templates"
 TEMPLATE_NAME = "template.html"
+FONTS_DIR = TEMPLATES_DIR / "fonts"
 OUTPUT_PATH = ROOT / "resumes" / "index.html"  # index.html so that GitHub Pages serves it
+
+# Source Serif 4 (variable weight), inlined into the page. Each subset covers its unicode-range only,
+# so the browser uses the latin-ext file just for characters such as the "š" in the name.
+FONT_FAMILY = "Source Serif 4"
+FONT_SUBSETS = {
+    "latin": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,"
+    "U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+    "latin-ext": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,"
+    "U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF",
+}
 
 # Browsers that can print the page to PDF, looked up on PATH in this order.
 BROWSER_COMMANDS = ["google-chrome", "google-chrome-stable", "chromium", "chromium-browser", "chrome", "msedge"]
@@ -40,6 +52,21 @@ def group_skills(data: dict) -> list[tuple[str, list[dict]]]:
         else:
             print(f"warning: skill {name!r} has a missing name or a missing/unknown level {level!r}; omitted", file=sys.stderr)
     return [(level, skills) for level, skills in groups.items() if skills]
+
+
+def font_face_css() -> str:
+    """@font-face rules with the fonts in templates/fonts embedded as base64, so the page needs no network."""
+    rules = []
+    for style in ("normal", "italic"):
+        for subset, unicode_range in FONT_SUBSETS.items():
+            font = FONTS_DIR / f"source-serif-4-{subset}-wght-{style}.woff2"
+            encoded = base64.b64encode(font.read_bytes()).decode("ascii")
+            rules.append(
+                f'@font-face {{ font-family: "{FONT_FAMILY}"; font-style: {style}; font-weight: 200 900; '
+                f"font-display: swap; src: url(data:font/woff2;base64,{encoded}) format('woff2'); "
+                f"unicode-range: {unicode_range}; }}"
+            )
+    return "\n".join(rules)
 
 
 def pdf_filename(data: dict) -> str:
@@ -103,19 +130,20 @@ def build() -> None:
     )
     template = env.get_template(TEMPLATE_NAME)
     skill_groups = group_skills(data)
+    font_css = font_face_css()
     pdf_name = pdf_filename(data)
     pdf_path = OUTPUT_PATH.with_name(pdf_name)
 
     OUTPUT_PATH.parent.mkdir(exist_ok=True)
     # First render links to the PDF (hidden in print, so the PDF is the same either way);
     # if the PDF could not be made, render again without the link.
-    OUTPUT_PATH.write_text(template.render(**data, skill_groups=skill_groups, pdf_url=pdf_name), encoding="utf-8")
+    OUTPUT_PATH.write_text(template.render(**data, skill_groups=skill_groups, font_css=font_css, pdf_url=pdf_name), encoding="utf-8")
     print(f"Built {OUTPUT_PATH.relative_to(ROOT)}")
 
     if build_pdf(OUTPUT_PATH, pdf_path):
         print(f"Built {pdf_path.relative_to(ROOT)}")
     else:
-        OUTPUT_PATH.write_text(template.render(**data, skill_groups=skill_groups, pdf_url=None), encoding="utf-8")
+        OUTPUT_PATH.write_text(template.render(**data, skill_groups=skill_groups, font_css=font_css, pdf_url=None), encoding="utf-8")
 
 
 if __name__ == "__main__":
