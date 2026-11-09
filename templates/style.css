@@ -35,7 +35,8 @@ html {
         radial-gradient(ellipse 70% 62% at 50% 46%, transparent 40%, color-mix(in srgb, var(--desk) 94%, transparent) 100%),
         radial-gradient(circle, var(--dot) 1.5px, transparent 2px);
     background-size: 100% 100%, 22px 22px;
-    background-position: 0 0, 11px 11px;
+    /* The dot grid is centered on the paper: a dot column sits on the vertical center axis */
+    background-position: 0 0, 50% 11px;
     background-attachment: fixed;
 }
 
