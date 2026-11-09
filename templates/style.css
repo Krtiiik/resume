@@ -226,7 +226,8 @@ a.ci:hover {
     border-radius: 6px;
 }
 
-@media (max-width: 210mm) {
+/* Screen only: the printed page is narrower than 210mm too, but must keep the full size */
+@media screen and (max-width: 210mm) {
     #photo {
         width: 22mm;
         margin-left: 12px;
