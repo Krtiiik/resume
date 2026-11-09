@@ -336,6 +336,43 @@ main>section>ul {
     stroke-linejoin: round;
 }
 
+/* Skills: one row per level, skills joined by small dots */
+main>section>ul:has(.skills-row) {
+    gap: 5px;
+}
+
+.skills-row {
+    display: grid;
+    grid-template-columns: 118px 1fr;
+    column-gap: 12px;
+    align-items: baseline;
+
+    h4 {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .04em;
+        color: var(--muted);
+    }
+
+    p {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        line-height: 1.5;
+    }
+
+    span+span::before {
+        content: '';
+        width: 3px;
+        height: 3px;
+        margin: 0 5px;
+        border-radius: 50%;
+        background: var(--accent);
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
 /* Languages */
 .languages>ul {
     flex-direction: row;

@@ -214,6 +214,20 @@
         </section>
         {% endif %}
 
+        {% if skill_groups %}
+        <section>
+            <h2>Skills</h2>
+            <ul>
+                {% for level, names in skill_groups %}
+                <li class="skills-row">
+                    <h4>{{ level }}</h4>
+                    <p>{% for name in names %}<span>{{ name }}</span>{% endfor %}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
         {% if languages %}
         <section class="languages">
             <h2>Languages</h2>

@@ -115,6 +115,7 @@
         }
     ],
     "meta": {
+        "skillLevels": ["Professional", "Advanced", "Familiar"],
         "lastModified": "2026-08-06T20:00:00.000Z"
     }
 }
