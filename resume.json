@@ -3,7 +3,6 @@
     "basics": {
         "name": "Lukáš Nedbálek",
         "label": "Student, Problem Solver, Developer, Tinkerer",
-        "image": "./photo.jpg",
         "summary": "I study AI - Optimization, Operations Research, and Machine Learning. My main interest is solving difficult real-life problems using the best and most efficient approaches possible. I believe that effective problem-solving involves not only knowing how to solve problems but also properly identifying them and understanding their context, leading to better long-term solutions.",
         "url": "https://krtiiik.github.io/",
         "email": "lukas.nedbalek@email.cz",
@@ -42,7 +41,7 @@
             "endDate": "2020-09",
             "summary": "Managing teams of over 12 crew members to cooperate efficiently in a fast-paced environment, managing inventory of operational sources and sufficient supply, ensuring highest and consistent product quality.",
             "highlights": [
-                "Shift Manager Course @ McDonald's Czech Republic (2020/6)"
+                "Shift Manager Course @ McDonald's Czech Republic (2020/06)"
             ]
         },
         {

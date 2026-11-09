@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <title>{{ basics.name }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 {% include "style.css" %}
     </style>
@@ -17,7 +18,7 @@
         <div id="contacts-row">
             <section>
                 {% if basics.url %}
-                <div class="contacts-item" data-contact="url"><a href="{{ basics.url }}">{{ basics.url|replace("https://", "")|replace("/", "") }}</a></div>
+                <div class="contacts-item" data-contact="url"><a href="{{ basics.url }}">{{ basics.url|replace("https://", "")|trim("/") }}</a></div>
                 {% endif %}
                 {% if basics.email %}
                 <div class="contacts-item" data-contact="email">{{ basics.email|replace("@", "(at)")}}</div>
@@ -29,7 +30,7 @@
                     {% endif %}
                     {% if loc.countryCode %}
                     <span>{{ loc.countryCode }}</span>
-                    {% endif%}
+                    {% endif %}
                 </div>
                 {% endif %}
             </section>
@@ -65,7 +66,7 @@
                     {% endif %}
                     <div class="entry-content">
                         <header>
-                            <h4>{{ job.position }}</h3>
+                            <h4>{{ job.position }}</h4>
                             <div class="entry-dates">
                                 {% if job.startDate %}
                                 <span data-entry-dates="start">{{ job.startDate | replace('-', '/') }}</span>
@@ -77,9 +78,16 @@
                                 {% endif %}
                             </div>
                         </header>
-                        <p>
-                            {{ job.summary }}
-                        </p>
+                        {% if job.summary %}
+                        <p>{{ job.summary }}</p>
+                        {% endif %}
+                        {% if job.highlights %}
+                        <ul class="entry-highlights">
+                            {% for highlight in job.highlights %}
+                            <li>{{ highlight }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
                     </div>
                 </li>
                 {% endfor %}
@@ -97,13 +105,13 @@
                         <h3><a href="{{ pub.url }}">{{ pub.name }}</a></h3>
                         <span class="subtitle">{{ pub.publisher }}</span>
                         <div class="entry-dates">
-                            <span data-entry-dates="single">{{ pub.releaseDate }}</span>
+                            <span data-entry-dates="single">{{ pub.releaseDate | replace('-', '/') }}</span>
                         </div>
                     </header>
                     <div class="entry-content">
-                        <p>
-                            {{ pub.summary }}
-                        </p>
+                        {% if pub.summary %}
+                        <p>{{ pub.summary }}</p>
+                        {% endif %}
                     </div>
                 </li>
                 {% endfor %}
@@ -183,9 +191,25 @@
                                 {% endif %}
                             </div>
                         </header>
-                        <p>
-                            {{ volu.summary }}
-                        </p>
+                        {% if volu.summary %}
+                        <p>{{ volu.summary }}</p>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        {% if languages %}
+        <section>
+            <h2>Languages</h2>
+            <ul>
+                {% for lang in languages %}
+                <li class="entry">
+                    <div class="row-flex-air">
+                        <h4>{{ lang.language }}</h4>
+                        <span class="subtitle">{{ lang.fluency }}</span>
                     </div>
                 </li>
                 {% endfor %}
